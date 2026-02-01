@@ -3,25 +3,20 @@ FROM eclipse-temurin:17-jdk AS builder
 
 WORKDIR /app
 
-# Copy Maven files first for better layer caching
-COPY pom.xml .
-COPY mvnw .mvn/ .  # .mvn dir if present
-RUN chmod +x mvnw
+# Copy Maven wrapper files (cache deps better)
+COPY pom.xml mvnw ./
+COPY .mvn .mvn/
+RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
 
-# Cache dependencies
-RUN ./mvnw dependency:go-offline -B
-
-# Copy source and build JAR
+# Copy source code and build
 COPY src ./src
 RUN ./mvnw clean package -DskipTests -B
 
-# Production stage (uses JRE for smaller image)
+# Production stage (JRE for smaller image)
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
-
-# Copy built JAR
 COPY --from=builder /app/target/*.jar app.jar
 
-# Render uses dynamic $PORT (default 10000); no EXPOSE needed
+# Render sets $PORT automatically
 ENTRYPOINT ["java", "-jar", "app.jar"]
