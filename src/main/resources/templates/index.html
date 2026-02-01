@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Will you be my Valentine?</title>
+
+    <style>
+        #yesBtn {
+            font-size: 20px;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+
+        #noBtn {
+            font-size: 20px;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Will you be my Valentine? 💘</h1>
+
+<form th:action="@{/index/yes}" method="post">
+    <button id="yesBtn" type="submit">Yes 💖</button>
+
+    <button id="noBtn" type="button" onclick="handleNo()">No 💔</button>
+</form>
+
+<script>
+    let yesSize = 30;
+    let noSize = 30;
+
+    function handleNo() {
+        growYes();
+        reduceNo();
+    }
+
+    function growYes() {
+        yesSize += 10;
+        const yesBtn = document.getElementById("yesBtn");
+        yesBtn.style.fontSize = yesSize + "px";
+        yesBtn.style.padding = (yesSize / 2) + "px " + yesSize + "px";
+    }
+
+    function reduceNo() {
+        noSize -= 1;
+        const noBtn = document.getElementById("noBtn");
+        noBtn.style.fontSize = noSize + "px";
+        noBtn.style.padding = (noSize / 2) + "px " + noSize + "px";
+
+        if (noSize <= 5) {
+            noBtn.style.display = "none";
+        }
+    }
+</script>
+
+
+</body>
+</html>
