@@ -2,31 +2,88 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Will you be my Valentine?</title>
+    <title>Sasha Kim, will you be my Valentine?</title>
 
     <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .gif {
+            width: 180px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #e63946;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center; /* ✅ KEY FIX */
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
         #yesBtn {
             font-size: 20px;
-            padding: 10px 20px;
+            padding: 12px 28px;
+            background-color: #ff4d6d;
+            color: white;
             transition: all 0.2s ease;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff1e56;
         }
 
         #noBtn {
             font-size: 20px;
-            padding: 10px 20px;
+            padding: 12px 28px;
+            background-color: #adb5bd;
+            color: white;
             transition: all 0.2s ease;
         }
     </style>
 </head>
 <body>
 
-<h1>Will you be my Valentine? 💘</h1>
+<div class="container">
 
-<form th:action="@{/index/yes}" method="post">
-    <button id="yesBtn" type="submit">Yes 💖</button>
+    <img
+            class="gif"
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzZxZ2Z5cGFpb2I5bWk3djE1czNsb2N2bDdlZjQyMmE4bXo0bWxqNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oriO0OEd9QIDdllqo/giphy.gif"
+            alt="Cute gif">
 
-    <button id="noBtn" type="button" onclick="handleNo()">No 💔</button>
-</form>
+    <h1>Will you be my Valentine? 💘</h1>
+
+    <form th:action="@{/index/yes}" method="post">
+        <button id="yesBtn" type="submit">Yes 💖</button>
+        <button id="noBtn" type="button" onclick="handleNo()">No 💔</button>
+    </form>
+</div>
 
 <script>
     let yesSize = 30;
@@ -55,7 +112,6 @@
         }
     }
 </script>
-
 
 </body>
 </html>
